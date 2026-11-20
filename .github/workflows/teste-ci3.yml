@@ -8,7 +8,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js 
@@ -17,8 +17,15 @@ jobs:
         node-version: 18
         cache: 'npm'
     - name: Instalar dependencias
-    run: npm install
+      run: npm install
 
-    name: Executar testes
-    run: npm test
+    - name: Executar testes
+      run: npm test
   
+-name: Gerar relatório Allure
+run: npm run report:generate
+-name: Publicar relatório no Gh Pages
+uses: peaceiris/actions-gh-pages@v4
+with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    publish_dir: ./public
